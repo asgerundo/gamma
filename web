@@ -45,7 +45,7 @@ app.layout = html.Div([
 )
 def generate_pdf(n_clicks, navn, email, telefonnummer, adresse):
     if n_clicks > 0:
-        metadata, response = dbx.files_download(DROPBOX_FILE_PATH)
+        metadata, response = dbx.files_download(gamma.pdf)
         existing_pdf_stream = io.BytesIO(response.content)
         packet = io.BytesIO()
         can = canvas.Canvas(packet, pagesize=letter)
