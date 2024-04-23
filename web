@@ -6,6 +6,16 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 import io
 from flask import send_file
+import dropbox
+import os
+
+DROPBOX_ACCESS_TOKEN = os.environ.get('DROPBOX_ACCESS_TOKEN')
+
+# Dropbox file path
+DROPBOX_FILE_PATH = "/gamma.pfd"
+
+# Initialize Dropbox client
+dbx = dropbox.Dropbox(DROPBOX_ACCESS_TOKEN)
 
 app = dash.Dash(__name__)
 server = app.server
@@ -35,6 +45,8 @@ app.layout = html.Div([
 )
 def generate_pdf(n_clicks, navn, email, telefonnummer, adresse):
     if n_clicks > 0:
+        metadata, response = dbx.files_download(DROPBOX_FILE_PATH)
+        existing_pdf_stream = io.BytesIO(response.content)
         packet = io.BytesIO()
         can = canvas.Canvas(packet, pagesize=letter)
         can.setFillColorRGB(1, 1, 1)
