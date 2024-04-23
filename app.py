@@ -45,7 +45,7 @@ app.layout = html.Div([
 )
 def generate_pdf(n_clicks, navn, email, telefonnummer, adresse):
     if n_clicks > 0:
-        metadata, response = dbx.files_download(gamma.pdf)
+        metadata, response = dbx.files_download('/gamma.pdf')
         existing_pdf_stream = io.BytesIO(response.content)
         packet = io.BytesIO()
         can = canvas.Canvas(packet, pagesize=letter)
@@ -60,7 +60,7 @@ def generate_pdf(n_clicks, navn, email, telefonnummer, adresse):
         packet.seek(0)
         new_pdf = PdfReader(packet)
 
-        existing_pdf = PdfReader(open("/Users/asgermollernielsen/Desktop/gamma.pdf", "rb"))
+        existing_pdf = PdfReader(open(existing_pdf_stream, "rb"))
         output = PdfWriter()
 
         for i in range(len(existing_pdf.pages)):
@@ -95,7 +95,7 @@ def download_pdf():
     packet.seek(0)
     new_pdf = PdfReader(packet)
 
-    existing_pdf = PdfReader(open("/Users/asgermollernielsen/Desktop/gamma.pdf", "rb"))
+    existing_pdf = PdfReader(open(existing_pdf_stream, "rb"))
     output = PdfWriter()
 
     for i in range(len(existing_pdf.pages)):
