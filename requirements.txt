@@ -1,0 +1,6 @@
+dash
+plotly
+PyPDF2
+reportlab
+flask
+dropbox
